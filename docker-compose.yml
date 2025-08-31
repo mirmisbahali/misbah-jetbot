@@ -1,0 +1,14 @@
+services:
+  jetbot-ros:
+    image: dustynv/ros:humble-ros-base-l4t-r32.7.1
+    container_name: jetbot-ros-container
+    runtime: nvidia
+    network_mode: host
+    stdin_open: true
+    tty: true
+    working_dir: /ros_ws
+    volumes:
+      - ./src/jetbot_ws:/ros_ws
+      - ./ros_container_configs:/ros_setup
+    # Uncomment to keep container running
+    # command: tail -f /dev/null
