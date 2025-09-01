@@ -4,7 +4,7 @@
 docker run --runtime nvidia -it --rm \
   --network=host \
   --privileged \
-  --user root \
+  --user $(id -u):$(id -g) \
   -v /dev:/dev \
   -v /sys:/sys \
   -v ~/projects/misbah-jetbot/src/jetbot_ws:/ros_ws \
