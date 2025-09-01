@@ -1,13 +1,12 @@
 services:
-  jetbot-ros:
-    image: dustynv/ros:humble-ros-base-l4t-r32.7.1
-    container_name: jetbot-ros-container
-    user: "1000:1000"
-    privileged: true
+  ros2dev:
+    image: ${IMAGE:-dustynv/ros:humble-ros-base-l4t-r32.7.1}
     network_mode: host
-    stdin_open: true
-    tty: true
+    privileged: true
+    user: "${UID_HOST:-1000}:${GID_HOST:-1000}"
     working_dir: /ros_ws
+    environment:
+      - ROS_WORKSPACE=/ros_ws
     deploy:
       resources:
         reservations:
@@ -16,9 +15,38 @@ services:
               count: all
               capabilities: [gpu]
     volumes:
-      - ./src/jetbot_ws:/ros_ws
-      - ./ros_container_configs:/ros_setup
+      - ${ROS_WS:-./src/jetbot_ws}:/ros_ws
+      - ${ROS_SETUP:-./ros_container_configs}:/ros_setup
       - /dev:/dev
       - /sys:/sys
-    # Uncomment to keep container running
-    # command: tail -f /dev/null
+    devices:
+      - /dev/ttyTHS1:/dev/ttyTHS1
+    tty: true
+    stdin_open: true
+    command: ["/bin/bash"]
+
+  ros2run:
+    image: ${IMAGE:-dustynv/ros:humble-ros-base-l4t-r32.7.1}
+    network_mode: host
+    privileged: true
+    user: "${UID_HOST:-1000}:${GID_HOST:-1000}"
+    working_dir: /ros_ws
+    environment:
+      - ROS_WORKSPACE=/ros_ws
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      - ${ROS_WS:-./src/jetbot_ws}:/ros_ws
+      - ${ROS_SETUP:-./ros_container_configs}:/ros_setup
+      - /dev:/dev
+      - /sys:/sys
+    devices:
+      - /dev/ttyTHS1:/dev/ttyTHS1
+    tty: true
+    stdin_open: true
+    command: ["/bin/bash"]
