@@ -1,7 +1,8 @@
 docker run --runtime nvidia -it --rm \
-  --network=host \
-  --privileged \
+  --network host --privileged \
   --user "$(id -u):$(id -g)" \
+  --group-add "$(getent group tty     | cut -d: -f3)" \
+  --group-add "$(getent group dialout | cut -d: -f3)" \
   -e USER="$(id -un)" -e HOME=/ros_ws -e TERM=xterm-256color \
   -v /etc/passwd:/etc/passwd:ro \
   -v /etc/group:/etc/group:ro \
@@ -9,6 +10,5 @@ docker run --runtime nvidia -it --rm \
   -v ~/projects/misbah-jetbot/src/jetbot_ws:/ros_ws \
   -v ~/projects/misbah-jetbot/ros_container_configs:/ros_setup \
   --workdir /ros_ws \
-  dustynv/ros:humble-ros-base-l4t-r32.7.1 \
-  /bin/bash
+  dustynv/ros:humble-ros-base-l4t-r32.7.1 /bin/bash
 
