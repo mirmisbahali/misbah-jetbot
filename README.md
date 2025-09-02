@@ -1,7 +1,7 @@
 # File Structure
 
 ```txt
-robot/
+misbah-jetbot/
 ├─ containers/
 │  ├─ jetson.Dockerfile           # arm64, Humble, minimal GPU deps; tuned for Nano
 │  ├─ host.Dockerfile             # amd64/arm64, Humble + dev tools for RViz/Nav2
