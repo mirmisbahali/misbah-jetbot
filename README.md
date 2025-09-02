@@ -61,3 +61,23 @@ misbah-jetbot/
 │  └─ NAV2_TUNING.md              # costmaps, controllers, BT notes
 └─ .gitignore
 ```
+
+
+# Run Containers
+## On Jetson
+
+```bash
+docker run --rm -it \
+  --network host --ipc host --privileged \
+  -e ROS_DOMAIN_ID=42 -e RMW_IMPLEMENTATION=rmw_fastrtps_cpp \
+  --name ros2_jetson $PWD/ros2_ws/:jetson
+```
+
+## On Host (Laptop)
+
+```bash
+docker run --rm -it \
+  --network host --ipc host \
+  -e ROS_DOMAIN_ID=42 -e RMW_IMPLEMENTATION=rmw_fastrtps_cpp \
+  --name ros2_host $PWD/ros2_ws:host
+```
