@@ -23,6 +23,9 @@ USER $USERNAME
 # Add user to video group to allow access to webcam
 RUN sudo usermod --append --groups video $USERNAME
 
+# Add user to dialout group
+RUN sudo usermod --append --groups dialout $USERNAME
+
 # Rosdep update
 RUN rosdep update
 
@@ -33,3 +36,6 @@ RUN echo "source /opt/ros/${ROS_DISTRO}/install/setup.bash" >> ~/.bashrc
 ## ADD ANY CUSTOM SETUP BELOW ##
 ################################
 RUN sudo pip install Jetson.GPIO
+RUN sudo pip install pyserial
+
+
