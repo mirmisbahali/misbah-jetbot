@@ -1,4 +1,8 @@
+# On the Pico (MicroPython)
 from machine import UART, Pin
-uart1 = UART(1, baudrate=9600, tx=Pin(4), rx=Pin(5))
-uart1.write('hello')  # write 5 bytes
-uart1.read(5)  
+u = UART(0, baudrate=115200, tx=Pin(0), rx=Pin(1))
+while True:
+    if u.any():
+        received_data = u.read()
+        print("Received:", received_data.decode())# echo back
+

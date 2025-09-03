@@ -2,38 +2,51 @@
 
 ```txt
 misbah-jetbot/
+├─ .devcontainer/
+│  ├─ host/
+│  │  ├─ Dockerfile               # amd64/arm64, Humble + dev tools for RViz/Nav2
+│  │  └─ devcontainer.json        # host development container config
+│  └─ jetbot/
+│     ├─ Dockerfile               # arm64, Humble, minimal GPU deps; tuned for Nano
+│     └─ devcontainer.json        # jetbot development container config
 ├─ containers/
-│  ├─ jetson.Dockerfile           # arm64, Humble, minimal GPU deps; tuned for Nano
-│  ├─ host.Dockerfile             # amd64/arm64, Humble + dev tools for RViz/Nav2
 │  └─ entrypoint.sh               # common ROS env setup for both images
 ├─ compose/
 │  ├─ docker-compose.yml          # services: ros-jetson, ros-host; shared volumes/net
 │  └─ .env                        # COMPOSE_PROJECT_NAME, ROS_DOMAIN_ID, etc.
-├─ .devcontainer/
-│  └─ devcontainer.json           # optional: open the repo as a container on laptop
+├─ pico/
+│  └─ firmware/
+│     └─ motor_driver/            # Raspberry Pi Pico motor controller firmware
 ├─ ros2_ws/
-│  ├─ src/
-│  │  ├─ robot_bringup/           # launch files to start the stack (sensors, Nav2)
-│  │  │  ├─ launch/
-│  │  │  │  ├─ jetson_bringup.launch.py
-│  │  │  │  └─ sim_bringup.launch.py
-│  │  │  └─ params/
-│  │  │     └─ robot.yaml         # nodes, remaps, QoS, namespaces
-│  │  ├─ robot_description/       # URDF/Xacro + meshes
-│  │  │  ├─ urdf/
-│  │  │  ├─ meshes/
-│  │  │  └─ ros2_control.yaml     # controllers + joints
-│  │  ├─ robot_navigation/        # Nav2 configs & launch
-│  │  │  ├─ launch/nav2.launch.py
-│  │  │  └─ config/
-│  │  │     ├─ nav2_params.yaml
-│  │  │     └─ behavior_trees/
-│  │  ├─ robot_sensors/           # LiDAR/IMU/camera drivers or wrappers
-│  │  ├─ robot_bringup_msgs/      # custom msg/srv if needed
-│  │  └─ robot_util/              # shared libs, e.g., TF helpers
-│  ├─ install/                    # colcon (generated)
-│  ├─ build/                      # colcon (generated)
-│  └─ log/                        # colcon (generated)
+│  ├─ host_ws/                    # host development workspace
+│  │  └─ src/                     # host-specific ROS2 packages
+│  ├─ jetbot_ws/                  # jetbot workspace
+│  │  └─ src/
+│  │     ├─ motor_controller/     # motor control ROS2 package
+│  │     └─ pico_bridge/          # bridge between ROS2 and Pico firmware
+│  └─ [future structure below - will be added as project progresses]
+│     ├─ src/
+│     │  ├─ robot_bringup/        # launch files to start the stack (sensors, Nav2)
+│     │  │  ├─ launch/
+│     │  │  │  ├─ jetson_bringup.launch.py
+│     │  │  │  └─ sim_bringup.launch.py
+│     │  │  └─ params/
+│     │  │     └─ robot.yaml      # nodes, remaps, QoS, namespaces
+│     │  ├─ robot_description/    # URDF/Xacro + meshes
+│     │  │  ├─ urdf/
+│     │  │  ├─ meshes/
+│     │  │  └─ ros2_control.yaml  # controllers + joints
+│     │  ├─ robot_navigation/     # Nav2 configs & launch
+│     │  │  ├─ launch/nav2.launch.py
+│     │  │  └─ config/
+│     │  │     ├─ nav2_params.yaml
+│     │  │     └─ behavior_trees/
+│     │  ├─ robot_sensors/        # LiDAR/IMU/camera drivers or wrappers
+│     │  ├─ robot_bringup_msgs/   # custom msg/srv if needed
+│     │  └─ robot_util/           # shared libs, e.g., TF helpers
+│     ├─ install/                 # colcon (generated)
+│     ├─ build/                   # colcon (generated)
+│     └─ log/                     # colcon (generated)
 ├─ maps/
 │  ├─ demo_world.yaml
 │  └─ demo_world.pgm              # or .png
@@ -59,6 +72,7 @@ misbah-jetbot/
 ├─ docs/
 │  ├─ SETUP.md                    # first-time setup (Jetson + laptop)
 │  └─ NAV2_TUNING.md              # costmaps, controllers, BT notes
+├─ .vscode/                      # VS Code configuration files
 └─ .gitignore
 ```
 # SSH setup

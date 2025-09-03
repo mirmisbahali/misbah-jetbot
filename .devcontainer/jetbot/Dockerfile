@@ -2,7 +2,7 @@ FROM dustynv/ros:humble-ros-base-l4t-r32.7.1
 
 # Add ubuntu user with same UID and GID as your host system, if it doesn't already exist
 # Since Ubuntu 24.04, a non-root user is created by default with the name vscode and UID=1000
-ARG USERNAME=ubuntu
+ARG USERNAME=jetson_ros
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 RUN if ! id -u $USER_UID >/dev/null 2>&1; then \
@@ -32,3 +32,4 @@ RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
 ################################
 ## ADD ANY CUSTOM SETUP BELOW ##
 ################################
+RUN sudo pip install Jetson.GPIO
