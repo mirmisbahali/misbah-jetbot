@@ -21,8 +21,9 @@ USER $USERNAME
 # Add user to video group to allow access to webcam
 RUN sudo usermod --append --groups video $USERNAME
 
-# Update all packages
-RUN sudo apt update && sudo apt upgrade -y
+# Fix expired ROS GPG key and update packages
+RUN sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F42ED6FBAB17C654 && \
+    sudo apt update && sudo apt upgrade -y
 
 # Install Git
 RUN sudo apt install -y git
