@@ -1,6 +1,6 @@
 {
   "name": "Host container",
-  "dockerFile": "../../containers/host.Dockerfile",
+  "dockerFile": "Dockerfile",
   "runArgs": [
     "--privileged",
     "--network=host"

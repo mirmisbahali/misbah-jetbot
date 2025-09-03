@@ -1,6 +1,6 @@
 {
   "name": "Jetbot container",
-  "dockerFile": "../../containers/jetson.Dockerfile",
+  "dockerFile": "Dockerfile",
   "runArgs": [
     "--privileged",
     "--network=host"
