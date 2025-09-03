@@ -129,7 +129,8 @@ ssh jetbot
 ## 5) VS Code Remote-SSH (quick start)
 
 > [!IMPORTANT]
-> The `Connect to Host...` in the Remote-SSH extension is not working with the Jetpack 4.6 version. The specific error I'm getting is `Remote host does not meet the prerequisites for running vs code server`. I solved this issue by downgrading the VS code version to `1.85` on my Laptop.
+> The `Connect to Host...` in the Remote-SSH extension was not working with the Jetpack 4.6 version. The specific error I was getting was `Remote host does not meet the prerequisites for running vs code server`. 
+> I resolved this issue by downgrading VS code on my laptop to version `1.85`.
 
 * Install the **Remote - SSH** extension on your laptop.
 * Command Palette → *Remote-SSH: Connect to Host…* → type `jetbot` (uses your `~/.ssh/config`).
