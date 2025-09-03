@@ -21,6 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             'simple_jetbot_controller = motor_controller.simple_jetbot_controller:main',
+            'uart_controller = motor_controller.uart_controller:main',
         ],
     },
 )

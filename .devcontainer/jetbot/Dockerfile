@@ -27,7 +27,7 @@ RUN sudo usermod --append --groups video $USERNAME
 RUN rosdep update
 
 # Source the ROS setup file
-RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
+RUN echo "source /opt/ros/${ROS_DISTRO}/install/setup.bash" >> ~/.bashrc
 
 ################################
 ## ADD ANY CUSTOM SETUP BELOW ##
