@@ -10,7 +10,9 @@ RUN if ! id -u $USER_UID >/dev/null 2>&1; then \
         useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME; \
     fi
 # Add sudo support for the non-root user
-RUN apt-get update && \
+RUN apt-get install curl -y && \
+    curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg \
+    apt-get update && \
     apt-get install -y sudo && \
     echo "$USERNAME ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME && \
     chmod 0440 /etc/sudoers.d/$USERNAME
