@@ -1,0 +1,15 @@
+{
+  "name": "Jetbot container",
+  "dockerFile": "../../containers/jetson.Dockerfile",
+  "runArgs": [
+    "--privileged",
+    "--network=host"
+  ],
+  // "workspaceMount": "source=${localWorkspaceFolder},target=/${localWorkspaceFolderBasename},type=bind", // Default created by VS code
+  // "workspaceFolder": "/${localWorkspaceFolderBasename}", // Default created by VS code
+  "workspaceMount": "source=${localWorkspaceFolder}/ros2_ws/jetbot_ws,target=/jetbot_ws,type=bind", // I only want to jetbot_ws to be available in Jetbot and not the whole repository
+  "workspaceFolder": "/jetbot_ws",
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.bash_history,target=/home/vscode/.bash_history,type=bind"
+  ]
+}
