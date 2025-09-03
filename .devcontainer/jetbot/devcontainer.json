@@ -3,7 +3,8 @@
   "dockerFile": "Dockerfile",
   "runArgs": [
     "--privileged",
-    "--network=host"
+    "--network=host",
+    "--runtime=nvidia"
   ],
   // "workspaceMount": "source=${localWorkspaceFolder},target=/${localWorkspaceFolderBasename},type=bind", // Default created by VS code
   // "workspaceFolder": "/${localWorkspaceFolderBasename}", // Default created by VS code
