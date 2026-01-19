@@ -36,3 +36,12 @@ RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
 ################################
 ## ADD ANY CUSTOM SETUP BELOW ##
 ################################
+
+RUN sudo apt install -y \
+    ros-humble-gazebo-* \
+    ros-humble-cartographer \
+    ros-humble-cartographer-ros \
+    ros-humble-navigation2 \
+    ros-humble-nav2-bringup
+
+RUN echo "source /host_ws/install/setup.bash\nexport TURTLEBOT3_MODEL=waffle" >> ~/.bashrc

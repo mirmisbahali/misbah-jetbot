@@ -3,7 +3,7 @@
   "dockerFile": "Dockerfile",
   "runArgs": [
     "--privileged",
-    "--network=host"
+    "--network=host",
   ],
   // "workspaceMount": "source=${localWorkspaceFolder},target=/${localWorkspaceFolderBasename},type=bind",
   // "workspaceFolder": "/${localWorkspaceFolderBasename}",
