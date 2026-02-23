@@ -38,12 +38,27 @@ RUN echo "source /opt/ros/${ROS_DISTRO}/install/setup.bash" >> ~/.bashrc
 RUN sudo pip install Jetson.GPIO
 RUN sudo pip install pyserial
 
-# ros2_control stack for hardware interface plugin and diff_drive_controller
+# Build ros2_control stack from source (apt binaries conflict with dustynv L4T base)
 RUN sudo apt-get update && sudo apt-get install -y \
-    ros-jazzy-ros2-control \
-    ros-jazzy-ros2-controllers \
-    ros-jazzy-robot-state-publisher \
-    ros-jazzy-xacro \
+    python3-colcon-common-extensions \
+    python3-vcstool \
     && sudo rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p ~/ros2_overlay_ws/src && \
+    cd ~/ros2_overlay_ws/src && \
+    git clone -b jazzy --depth 1 https://github.com/ros-controls/ros2_control.git && \
+    git clone -b jazzy --depth 1 https://github.com/ros-controls/ros2_controllers.git && \
+    git clone -b jazzy --depth 1 https://github.com/ros/robot_state_publisher.git && \
+    git clone -b jazzy --depth 1 https://github.com/ros/xacro.git
+
+RUN bash -c "\
+    source /opt/ros/${ROS_DISTRO}/install/setup.bash && \
+    cd ~/ros2_overlay_ws && \
+    rosdep install --from-paths src --ignore-src -r -y && \
+    colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release \
+    "
+
+# Source the overlay after the base ROS setup
+RUN echo "source ~/ros2_overlay_ws/install/setup.bash" >> ~/.bashrc
 
 
