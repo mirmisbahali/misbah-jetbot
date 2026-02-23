@@ -73,8 +73,8 @@ def generate_launch_description():
     robot_description = {"robot_description": ParameterValue(robot_description_content, value_type=str)}
 
     # ── Controller config ───────────────────────────────────────────────────
-    robot_controllers = PathJoinSubstitution(
-        [FindPackageShare("robot_description"), "config", "jetbot_controllers.yaml"]
+    robot_controllers = os.path.join(
+        get_package_share_directory("robot_description"), "config", "jetbot_controllers.yaml"
     )
 
     # ── Nodes ───────────────────────────────────────────────────────────────
