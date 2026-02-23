@@ -1,4 +1,4 @@
-FROM dustynv/ros:jazzy-ros-base-r36.4.0-cu128-24.04 
+FROM dustynv/ros:jazzy-ros-base-r36.4.0-cu128-24.04
 
 # Add ubuntu user with same UID and GID as your host system, if it doesn't already exist
 # Since Ubuntu 24.04, a non-root user is created by default with the name vscode and UID=1000
@@ -30,7 +30,8 @@ RUN sudo usermod --append --groups dialout $USERNAME
 RUN rosdep update
 
 # Source the ROS setup file
-RUN echo "source /opt/ros/${ROS_DISTRO}/install/setup.bash" >> ~/.bashrc
+RUN echo "source /opt/ros/${ROS_DISTRO}/install/setup.bash" >> ~/.bashrc && \
+    sudo bash -c "echo 'source /opt/ros/${ROS_DISTRO}/install/setup.bash' >> /etc/bash.bashrc"
 
 ################################
 ## ADD ANY CUSTOM SETUP BELOW ##
@@ -38,27 +39,10 @@ RUN echo "source /opt/ros/${ROS_DISTRO}/install/setup.bash" >> ~/.bashrc
 RUN sudo pip install Jetson.GPIO
 RUN sudo pip install pyserial
 
-# Build ros2_control stack from source (apt binaries conflict with dustynv L4T base)
+# ros2_control stack for hardware interface plugin and diff_drive_controller
 RUN sudo apt-get update && sudo apt-get install -y \
-    python3-colcon-common-extensions \
-    python3-vcstool \
+    ros-jazzy-ros2-control \
+    ros-jazzy-ros2-controllers \
+    ros-jazzy-robot-state-publisher \
+    ros-jazzy-xacro \
     && sudo rm -rf /var/lib/apt/lists/*
-
-RUN mkdir -p ~/ros2_overlay_ws/src && \
-    cd ~/ros2_overlay_ws/src && \
-    git clone -b jazzy --depth 1 https://github.com/ros-controls/ros2_control.git && \
-    git clone -b jazzy --depth 1 https://github.com/ros-controls/ros2_controllers.git && \
-    git clone -b jazzy --depth 1 https://github.com/ros/robot_state_publisher.git && \
-    git clone -b jazzy --depth 1 https://github.com/ros/xacro.git
-
-RUN bash -c "\
-    source /opt/ros/${ROS_DISTRO}/install/setup.bash && \
-    cd ~/ros2_overlay_ws && \
-    rosdep install --from-paths src --ignore-src -r -y && \
-    colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release \
-    "
-
-# Source the overlay after the base ROS setup
-RUN echo "source ~/ros2_overlay_ws/install/setup.bash" >> ~/.bashrc
-
-

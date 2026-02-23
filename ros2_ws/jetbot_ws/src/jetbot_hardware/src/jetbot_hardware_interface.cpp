@@ -18,9 +18,9 @@ namespace jetbot_hardware
 {
 
 hardware_interface::CallbackReturn JetbotHardwareInterface::on_init(
-  const hardware_interface::HardwareInfo & info)
+  const hardware_interface::HardwareComponentInterfaceParams & params)
 {
-  if (hardware_interface::SystemInterface::on_init(info) !=
+  if (hardware_interface::SystemInterface::on_init(params) !=
     hardware_interface::CallbackReturn::SUCCESS)
   {
     return hardware_interface::CallbackReturn::ERROR;
@@ -257,7 +257,7 @@ bool JetbotHardwareInterface::send_uart(const std::string & msg)
   if (serial_fd_ < 0) {
     return false;
   }
-  ssize_t bytes_written = write(serial_fd_, msg.c_str(), msg.size());
+  ssize_t bytes_written = ::write(serial_fd_, msg.c_str(), msg.size());
   return bytes_written == static_cast<ssize_t>(msg.size());
 }
 
