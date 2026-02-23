@@ -16,6 +16,7 @@ Usage:
 """
 
 import os
+import yaml
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
@@ -73,9 +74,11 @@ def generate_launch_description():
     robot_description = {"robot_description": ParameterValue(robot_description_content, value_type=str)}
 
     # ── Controller config ───────────────────────────────────────────────────
-    robot_controllers = os.path.join(
+    robot_controllers_path = os.path.join(
         get_package_share_directory("robot_description"), "config", "jetbot_controllers.yaml"
     )
+    with open(robot_controllers_path, "r") as f:
+        robot_controllers = yaml.safe_load(f)
 
     # ── Nodes ───────────────────────────────────────────────────────────────
 
