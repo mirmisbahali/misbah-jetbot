@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ros2_control hardware block — wires URDF joints to the C++ plugin -->
+  <xacro:macro name="jetbot_ros2_control" params="port baud_rate max_wheel_speed_rad_s">
+
+    <ros2_control name="JetbotHardware" type="system">
+      <hardware>
+        <plugin>jetbot_hardware/JetbotHardwareInterface</plugin>
+        <param name="port">${port}</param>
+        <param name="baud_rate">${baud_rate}</param>
+        <param name="max_wheel_speed_rad_s">${max_wheel_speed_rad_s}</param>
+      </hardware>
+
+      <joint name="left_wheel_joint">
+        <command_interface name="velocity">
+          <param name="min">-${max_wheel_speed_rad_s}</param>
+          <param name="max">${max_wheel_speed_rad_s}</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="right_wheel_joint">
+        <command_interface name="velocity">
+          <param name="min">-${max_wheel_speed_rad_s}</param>
+          <param name="max">${max_wheel_speed_rad_s}</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+    </ros2_control>
+
+  </xacro:macro>
+
+</robot>

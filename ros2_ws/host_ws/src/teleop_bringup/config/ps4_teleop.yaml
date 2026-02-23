@@ -1,0 +1,33 @@
+# PS4 DualShock 4 axis/button mapping for teleop_twist_joy
+#
+# PS4 axis reference (when connected via Bluetooth on Linux):
+#   Axis 0: Left stick horizontal   (left = -1.0, right = +1.0)
+#   Axis 1: Left stick vertical     (up = +1.0 = forward)
+#   Axis 2: L2 trigger              (released = +1.0, pressed = -1.0)
+#   Axis 3: Right stick horizontal  (left = +1.0 = turn left)
+#   Axis 4: Right stick vertical
+#   Axis 5: R2 trigger
+#
+# PS4 button reference:
+#   0=Cross, 1=Circle, 2=Square, 3=Triangle
+#   4=L1, 5=R1, 6=L2, 7=R2
+#   8=Share, 9=Options, 10=PS button
+#   11=L3, 12=R3
+
+teleop_twist_joy_node:
+  ros__parameters:
+    axis_linear:
+      x: 1             # Left stick vertical → forward/backward
+    axis_angular:
+      yaw: 3           # Right stick horizontal → turn left/right
+    scale_linear:
+      x: 0.4           # m/s at full stick deflection (normal mode)
+    scale_angular:
+      yaw: 1.5         # rad/s at full stick deflection (normal mode)
+    scale_linear_turbo:
+      x: 0.5           # m/s at full stick deflection (turbo mode)
+    scale_angular_turbo:
+      yaw: 2.0         # rad/s at full stick deflection (turbo mode)
+    enable_button: 5   # R1 — deadman switch: must hold to move
+    enable_turbo_button: 7  # R2 — turbo mode while held
+    publish_stamped_twist: false  # publish Twist not TwistStamped

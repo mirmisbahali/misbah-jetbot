@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot name="jetbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Top-level xacro: accepts overrideable args so launch files can
+       pass different port/baud/speed without editing URDF files. -->
+
+  <xacro:arg name="port"                   default="/dev/ttyTHS1"/>
+  <xacro:arg name="baud_rate"              default="115200"/>
+  <xacro:arg name="max_wheel_speed_rad_s"  default="15.0"/>
+
+  <!-- Include physical robot description (links, joints) -->
+  <xacro:include filename="$(find robot_description)/urdf/jetbot_base.urdf.xacro"/>
+
+  <!-- Include ros2_control hardware block -->
+  <xacro:include filename="$(find robot_description)/urdf/jetbot.ros2_control.xacro"/>
+
+  <!-- Instantiate the ros2_control macro with xacro args -->
+  <xacro:jetbot_ros2_control
+    port="$(arg port)"
+    baud_rate="$(arg baud_rate)"
+    max_wheel_speed_rad_s="$(arg max_wheel_speed_rad_s)"/>
+
+</robot>

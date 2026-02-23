@@ -1,4 +1,4 @@
-FROM osrf/ros:humble-desktop
+FROM osrf/ros:jazzy-desktop-full
 
 # Add ubuntu user with same UID and GID as your host system, if it doesn't already exist
 # Since Ubuntu 24.04, a non-root user is created by default with the name vscode and UID=1000
@@ -36,3 +36,9 @@ RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
 ################################
 ## ADD ANY CUSTOM SETUP BELOW ##
 ################################
+
+# PS4 controller teleoperation packages
+RUN sudo apt-get update && sudo apt-get install -y \
+    ros-jazzy-joy \
+    ros-jazzy-teleop-twist-joy \
+    && sudo rm -rf /var/lib/apt/lists/*

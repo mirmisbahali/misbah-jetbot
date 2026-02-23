@@ -12,5 +12,8 @@
   "workspaceFolder": "/jetbot_ws",
   "mounts": [
     "source=${localEnv:HOME}${localEnv:USERPROFILE}/.bash_history,target=/home/vscode/.bash_history,type=bind"
-  ]
+  ],
+  "containerEnv": {
+    "ROS_DOMAIN_ID": "42"
+  }
 }

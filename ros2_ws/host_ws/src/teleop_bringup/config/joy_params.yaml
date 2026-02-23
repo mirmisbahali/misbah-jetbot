@@ -1,0 +1,5 @@
+joy_node:
+  ros__parameters:
+    device_id: 0          # /dev/input/js0 — first joystick device
+    deadzone: 0.05        # ignore stick movement smaller than 5%
+    autorepeat_rate: 20.0 # Hz — keep publishing even when stick is held still

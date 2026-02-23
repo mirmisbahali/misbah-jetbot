@@ -1,0 +1,11 @@
+<library path="jetbot_hardware">
+  <class
+    name="jetbot_hardware/JetbotHardwareInterface"
+    type="jetbot_hardware::JetbotHardwareInterface"
+    base_class_type="hardware_interface::SystemInterface">
+    <description>
+      Hardware interface plugin for JetBot differential drive robot.
+      Communicates with a Raspberry Pi Pico over UART using the L=x.xxx R=y.yyy protocol.
+    </description>
+  </class>
+</library>

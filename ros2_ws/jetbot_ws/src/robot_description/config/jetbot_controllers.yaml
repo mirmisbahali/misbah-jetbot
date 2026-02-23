@@ -1,0 +1,52 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 30  # Hz — matches pico_bridge rate
+
+    diff_drive_controller:
+      type: diff_drive_controller/DiffDriveController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+diff_drive_controller:
+  ros__parameters:
+    left_wheel_names: ["left_wheel_joint"]
+    right_wheel_names: ["right_wheel_joint"]
+
+    # Physical parameters — update wheel_separation after measuring your robot
+    # Measure centre-to-centre distance between the two drive wheels in metres
+    wheel_separation: 0.130   # MEASURE: centre-to-centre between drive wheels (m)
+    wheel_radius: 0.030       # 60mm diameter / 2 = 0.030m
+
+    # Open-loop: no encoders, so we trust commanded velocity as actual velocity
+    open_loop: true
+
+    # Stop if no cmd_vel received for this many seconds
+    cmd_vel_timeout: 0.5
+
+    # teleop_twist_joy publishes geometry_msgs/Twist (not TwistStamped)
+    use_stamped_vel: false
+
+    # Publish odometry and TF
+    publish_odom: true
+    publish_odom_tf: true
+    odom_frame_id: odom
+    base_frame_id: base_link
+
+    # Velocity limits
+    linear:
+      x:
+        has_velocity_limits: true
+        max_velocity: 0.5        # m/s — safe indoor speed
+        min_velocity: -0.5
+        has_acceleration_limits: true
+        max_acceleration: 1.0    # m/s²
+        has_jerk_limits: false
+    angular:
+      z:
+        has_velocity_limits: true
+        max_velocity: 2.0        # rad/s
+        min_velocity: -2.0
+        has_acceleration_limits: true
+        max_acceleration: 2.0    # rad/s²
+        has_jerk_limits: false

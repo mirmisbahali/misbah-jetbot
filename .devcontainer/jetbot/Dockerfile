@@ -1,4 +1,4 @@
-FROM dustynv/ros:humble-ros-base-l4t-r32.7.1
+FROM dustynv/ros:jazzy-ros-base-r36.4.0-cu128-24.04 
 
 # Add ubuntu user with same UID and GID as your host system, if it doesn't already exist
 # Since Ubuntu 24.04, a non-root user is created by default with the name vscode and UID=1000
@@ -37,5 +37,13 @@ RUN echo "source /opt/ros/${ROS_DISTRO}/install/setup.bash" >> ~/.bashrc
 ################################
 RUN sudo pip install Jetson.GPIO
 RUN sudo pip install pyserial
+
+# ros2_control stack for hardware interface plugin and diff_drive_controller
+RUN sudo apt-get update && sudo apt-get install -y \
+    ros-jazzy-ros2-control \
+    ros-jazzy-ros2-controllers \
+    ros-jazzy-robot-state-publisher \
+    ros-jazzy-xacro \
+    && sudo rm -rf /var/lib/apt/lists/*
 
 
